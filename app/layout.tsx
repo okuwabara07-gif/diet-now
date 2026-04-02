@@ -1,40 +1,31 @@
-import type { Metadata } from 'next';
-import './globals.css';
+import type { Metadata } from 'next'
+import { getAllPosts } from '@/lib/posts'
 
 export const metadata: Metadata = {
-  title: { default: 'ダイエットNOW', template: '%s | ダイエットNOW' },
-  description: 'ヘアカラーのプロが教える最新情報・おすすめ商品・セルフカラーのコツ',
-};
+  title: 'ダイエットNow',
+  description: 'ダイエット・健康情報メディア',
+  keywords: 'ダイエットNow,ダイエット・健康情報メディア',
+  openGraph: {
+    title: 'ダイエットNow',
+    description: 'ダイエット・健康情報メディア',
+    type: 'website',
+    locale: 'ja_JP',
+    siteName: 'ダイエットNow',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'ダイエットNow',
+    description: 'ダイエット・健康情報メディア',
+  },
+  robots: { index: true, follow: true },
+}
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=DM+Sans:wght@400;600;800&display=swap" rel="stylesheet" />
-      </head>
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-SVQXY5C3PW"></script><script dangerouslySetInnerHTML={{__html:`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-SVQXY5C3PW');`}} /><body>
-        <header className="site-header">
-          <div className="header-inner">
-            <a href="/" className="site-logo">
-              <span className="logo-mark">🎨</span>
-              <span className="logo-text">ダイエットNOW</span>
-            </a>
-            <nav className="site-nav">
-              <a href="/">ホーム</a>
-              <a href="/blog">記事一覧</a>
-            </nav>
-          </div>
-        </header>
-        <main>{children}</main>
-        <footer className="site-footer">
-          <div className="footer-inner">
-            <p>© 2025 ダイエットNOW</p>
-            <p className="footer-note">本サイトはアフィリエイト広告を含みます</p>
-          </div>
-        </footer>
-      </body>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-SVQXY5C3PW"></script>
+      <script dangerouslySetInnerHTML={{__html:`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-SVQXY5C3PW');`}} />
+      <body>{children}</body>
     </html>
-  );
+  )
 }
