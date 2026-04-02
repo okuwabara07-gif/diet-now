@@ -1,35 +1,37 @@
-import { getAllPosts, getPostBySlug } from '@/lib/posts';
-import { MDXRemote } from 'next-mdx-remote/rsc';
-import { notFound } from 'next/navigation';
+import { getPostBySlug } from '@/lib/posts'
+import { MDXRemote } from 'next-mdx-remote/rsc'
+import { notFound } from 'next/navigation'
 
-const GENRE_ICONS: Record<string, string> = {
-  haircolor: '🎨', haircare: '✨', skincare: '🌸', nail: '💅', supplement: '💊',
-};
+export const dynamic = 'force-dynamic'
 
-export async function generateStaticParams() {
-  return getAllPosts().map(p => ({ slug: p.slug }));
-}
+type Props = { params: Promise<{ slug: string }> }
 
-export default function ArticlePage({ params }: { params: { slug: string } }) {
-  const post = getPostBySlug(params.slug);
-  if (!post) notFound();
+export default async function PostPage({ params }: Props) {
+  const { slug } = await params
+  const post = getPostBySlug(slug)
+  if (!post) notFound()
   return (
-    <>
-      <div className="article-hero">
-        <div className="article-hero-inner">
-          <p className="article-genre">{GENRE_ICONS[post.genre] || '📄'} {post.genre}</p>
-          <h1 className="article-title">{post.title}</h1>
-          <div className="article-meta"><span>{post.date}</span></div>
-          {post.tags.length > 0 && (
-            <div className="tags">
-              {post.tags.map(t => <span key={t} className="tag">#{t}</span>)}
-            </div>
-          )}
+    <main>
+      <header className="site-header">
+        <div className="site-title">{post.title}</div>
+      </header>
+      <main style={{maxWidth:'900px',margin:'0 auto',padding:'2rem 1.5rem 4rem'}}>
+        <div className="section-label">{post.genre}</div>
+        <h1 style={{fontFamily:'serif',fontWeight:300,fontSize:'1.4rem',margin:'1rem 0 0.5rem'}}>{post.title}</h1>
+        <p style={{fontSize:'0.7rem',color:'#888',marginBottom:'2rem'}}>{post.date}</p>
+        <div style={{fontSize:'0.9rem',lineHeight:1.9}}>
+          <MDXRemote source={post.content} />
         </div>
-      </div>
-      <article className="article-body">
-        <MDXRemote source={post.content} />
-      </article>
-    </>
-  );
+        <div style={{marginTop:'3rem',borderTop:'1px solid #eee',paddingTop:'2rem'}}>
+          <p style={{fontSize:'0.75rem',color:'#999',marginBottom:'1rem',fontWeight:600}}>PR・おすすめアイテム</p>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(150px,1fr))',gap:'1rem'}}>
+            <a href="https://shakelink.net/link.php?i=phwux2kr6pyj&m=mhwuxumw5ned" target="_blank" rel="noopener noreferrer sponsored" style={{display:'block',padding:'1rem',border:'1px solid #fff0e6',borderRadius:'12px',textDecoration:'none',background:'#fff8f5'}}><div style={{fontSize:'1.5rem',marginBottom:'0.5rem'}}>🧘</div><div style={{fontSize:'0.8rem',fontWeight:700,color:'#333',marginBottom:'0.25rem'}}>ホットヨガLAVA</div><div style={{fontSize:'0.7rem',color:'#666'}}>体験レッスン無料 →</div></a>
+            <a href="https://www.forcise.jp/ic/kerastase" target="_blank" rel="noopener noreferrer sponsored" style={{display:'block',padding:'1rem',border:'1px solid #f0e6ff',borderRadius:'12px',textDecoration:'none',background:'#faf7ff'}}><div style={{fontSize:'1.5rem',marginBottom:'0.5rem'}}>💜</div><div style={{fontSize:'0.8rem',fontWeight:700,color:'#333',marginBottom:'0.25rem'}}>ケラスターゼ</div><div style={{fontSize:'0.7rem',color:'#666'}}>美容室専売ヘアケア →</div></a>
+            <a href="https://kiwabi-japan.myshopify.com/pages/rv002-r-a8" target="_blank" rel="noopener noreferrer sponsored" style={{display:'block',padding:'1rem',border:'1px solid #ffe6f0',borderRadius:'12px',textDecoration:'none',background:'#fff7fa'}}><div style={{fontSize:'1.5rem',marginBottom:'0.5rem'}}>🌸</div><div style={{fontSize:'0.8rem',fontWeight:700,color:'#333',marginBottom:'0.25rem'}}>白髪染めNo.1</div><div style={{fontSize:'0.7rem',color:'#666'}}>カラートリートメント →</div></a>
+            <a href="https://colorpass-web.vercel.app/fortune" target="_blank" rel="noopener noreferrer" style={{display:'block',padding:'1rem',border:'1px solid #e8d4ff',borderRadius:'12px',textDecoration:'none',background:'linear-gradient(135deg,#f5eeff,#ede0ff)'}}><div style={{fontSize:'1.5rem',marginBottom:'0.5rem'}}>🔮</div><div style={{fontSize:'0.8rem',fontWeight:700,color:'#7c3aed',marginBottom:'0.25rem'}}>コパ占い</div><div style={{fontSize:'0.7rem',color:'#9333ea'}}>今日の運勢を占う →</div></a>
+          </div>
+        </div>
+      </main>
+    </main>
+  )
 }
