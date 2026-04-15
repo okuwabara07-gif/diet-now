@@ -23,6 +23,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ja">
       <head>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3460729726810386"
+          crossOrigin="anonymous"
+        />
+
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-SVQXY5C3PW"></script>
         <script dangerouslySetInnerHTML={{__html:`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-SVQXY5C3PW');`}} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{__html:`{"@context": "https://schema.org", "@type": "WebSite", "name": "ダイエットNow", "description": "ダイエット・健康情報メディア", "url": "https://diet-now.vercel.app", "publisher": {"@type": "Organization", "name": "AOKAE合同会社", "url": "https://colorpass-web.vercel.app"}, "potentialAction": {"@type": "SearchAction", "target": "https://diet-now.vercel.app/blog/{search_term_string}", "query-input": "required name=search_term_string"}}`}} />
